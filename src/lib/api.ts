@@ -3,7 +3,7 @@
  * Em desenvolvimento/produção basta definir VITE_API_BASE_URL
  * (ex.: http://localhost:8080) para apontar para a API Express.
  */
-export const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] ?? "/api/public";
+export const API_BASE_URL = "https://api-fake-blog-jet.vercel.app/api/public";
 
 export interface Postagem {
   index: number;

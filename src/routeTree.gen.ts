@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AutorNomeRouteImport } from './routes/autor.$nome'
 import { Route as PostagemIndexRouteImport } from './routes/postagem.$index'
+import { Route as ApiPublicSplatRouteImport } from './routes/api/public/$'
 import { Route as ApiPublicAutoresRouteImport } from './routes/api/public/autores'
 import { Route as ApiPublicBuscarRouteImport } from './routes/api/public/buscar'
 import { Route as ApiPublicCategoriasRouteImport } from './routes/api/public/categorias'
@@ -34,6 +35,11 @@ const AutorNomeRoute = AutorNomeRouteImport.update({
 const PostagemIndexRoute = PostagemIndexRouteImport.update({
   id: '/postagem/$index',
   path: '/postagem/$index',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicSplatRoute = ApiPublicSplatRouteImport.update({
+  id: '/api/public/$',
+  path: '/api/public/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicAutoresRoute = ApiPublicAutoresRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
+  '/api/public/$': typeof ApiPublicSplatRoute
   '/api/public/autores': typeof ApiPublicAutoresRoute
   '/api/public/buscar': typeof ApiPublicBuscarRoute
   '/api/public/categorias': typeof ApiPublicCategoriasRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
+  '/api/public/$': typeof ApiPublicSplatRoute
   '/api/public/autores': typeof ApiPublicAutoresRoute
   '/api/public/buscar': typeof ApiPublicBuscarRoute
   '/api/public/categorias': typeof ApiPublicCategoriasRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
+  '/api/public/$': typeof ApiPublicSplatRoute
   '/api/public/autores': typeof ApiPublicAutoresRoute
   '/api/public/buscar': typeof ApiPublicBuscarRoute
   '/api/public/categorias': typeof ApiPublicCategoriasRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/'
     | '/autor/$nome'
     | '/postagem/$index'
+    | '/api/public/$'
     | '/api/public/autores'
     | '/api/public/buscar'
     | '/api/public/categorias'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/'
     | '/autor/$nome'
     | '/postagem/$index'
+    | '/api/public/$'
     | '/api/public/autores'
     | '/api/public/buscar'
     | '/api/public/categorias'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/'
     | '/autor/$nome'
     | '/postagem/$index'
+    | '/api/public/$'
     | '/api/public/autores'
     | '/api/public/buscar'
     | '/api/public/categorias'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AutorNomeRoute: typeof AutorNomeRoute
   PostagemIndexRoute: typeof PostagemIndexRoute
+  ApiPublicSplatRoute: typeof ApiPublicSplatRoute
   ApiPublicAutoresRoute: typeof ApiPublicAutoresRoute
   ApiPublicBuscarRoute: typeof ApiPublicBuscarRoute
   ApiPublicCategoriasRoute: typeof ApiPublicCategoriasRoute
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/postagem/$index'
       fullPath: '/postagem/$index'
       preLoaderRoute: typeof PostagemIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/$': {
+      id: '/api/public/$'
+      path: '/api/public/$'
+      fullPath: '/api/public/$'
+      preLoaderRoute: typeof ApiPublicSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/autores': {
@@ -271,6 +291,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AutorNomeRoute: AutorNomeRoute,
   PostagemIndexRoute: PostagemIndexRoute,
+  ApiPublicSplatRoute: ApiPublicSplatRoute,
   ApiPublicAutoresRoute: ApiPublicAutoresRoute,
   ApiPublicBuscarRoute: ApiPublicBuscarRoute,
   ApiPublicCategoriasRoute: ApiPublicCategoriasRoute,

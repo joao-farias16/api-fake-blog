@@ -53,7 +53,9 @@ export function listarPorAutor(nome) {
 
 /** Busca simples por título, descrição ou categoria. */
 export function buscarPostagens(termo) {
-  const q = String(termo ?? "").trim().toLowerCase();
+  const q = String(termo ?? "")
+    .trim()
+    .toLowerCase();
   if (!q) return [];
   return listarPostagens().filter((post) =>
     [post.title, post.description, post.categoria].join(" ").toLowerCase().includes(q),

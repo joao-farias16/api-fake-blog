@@ -2,13 +2,13 @@
 
 Projeto de estudo composto por:
 
-1. **API** em Node.js + Express (`api/`) com dados simulados em arrays (sem banco de dados).
+1. **API** em Node.js + Express (`backend/`) com dados simulados em arrays (sem banco de dados).
 2. **Frontend** moderno (React + TanStack Start) que consome a API.
 
 ## Estrutura do projeto
 
 ```text
-api/
+backend/
   app.js                 # servidor Express e rotas
   lib/blog.js            # regras da API (listar, buscar, filtrar)
   models/articles.js     # dados simulados das postagens
@@ -20,7 +20,7 @@ src/
   routes/index.tsx       # página principal (lista, categorias, busca, autores)
   routes/postagem.$index.tsx  # detalhe da postagem
   routes/autor.$nome.tsx      # postagens de um autor
-  routes/api/public/     # os mesmos endpoints servidos junto do frontend
+  routes/api/public/     # os mesmos endpoints servidos junto do frontend (usam backend/lib)
 public/images/           # imagens usadas pelo frontend
 ```
 
@@ -29,7 +29,7 @@ public/images/           # imagens usadas pelo frontend
 ### API (Express)
 
 ```bash
-cd api
+cd backend
 npm install
 npm start          # http://localhost:8080
 ```
@@ -52,6 +52,16 @@ VITE_API_BASE_URL=http://localhost:8080
 
 Sem essa variável, o frontend usa `/api/public`, que serve os mesmos endpoints junto da
 aplicação (útil em produção, quando não há um servidor Express separado no ar).
+
+## Deploy na Vercel
+
+- O `vercel.json` usa o preset `tanstack-start`; no build da Vercel o Nitro detecta o
+  ambiente sozinho e gera `.vercel/output` (função `__server` + arquivos estáticos).
+- Não defina `VITE_API_BASE_URL` na Vercel: o frontend chama `/api/public` na mesma origem.
+- A API Express fica em `backend/` e **não** em `api/`: a Vercel trata a pasta `api/` da raiz
+  como Serverless Functions e passa a responder 404 para todo `/api/*`, o que derrubava
+  os endpoints `/api/public/...` do frontend.
+- `.vercel/` é saída de build e não deve ser versionada.
 
 ## Rotas da API
 

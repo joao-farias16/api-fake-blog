@@ -52,7 +52,11 @@ function Home() {
   const postagens = useQuery<Postagem[]>({
     queryKey: ["postagens", modo, q, categoria],
     queryFn: () =>
-      modo === "busca" ? api.buscar(q) : modo === "categoria" ? api.porCategoria(categoria) : api.postagens(),
+      modo === "busca"
+        ? api.buscar(q)
+        : modo === "categoria"
+          ? api.porCategoria(categoria)
+          : api.postagens(),
     retry: false,
   });
 
@@ -86,7 +90,8 @@ function Home() {
         <section className="mx-auto max-w-6xl px-4 py-10">
           <h2 className="text-xl font-semibold">Destaques</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            As postagens mais recentes, via <code className="text-primary">/postagens/destaques</code>
+            As postagens mais recentes, via{" "}
+            <code className="text-primary">/postagens/destaques</code>
           </p>
 
           <div className="mt-6">

@@ -85,4 +85,9 @@ app.get("/autor/:nome", (req, res) => {
   res.json(postagens);
 });
 
+// ROTAS INEXISTENTES (mesma resposta dos endpoints /api/public do frontend)
+app.use((req, res) => {
+  res.status(404).json({ erro: "Rota não encontrada" });
+});
+
 app.listen(port, () => console.log(`API rodando na porta ${port}!`));

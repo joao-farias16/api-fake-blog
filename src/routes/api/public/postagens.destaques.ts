@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { listarDestaques } from "../../../../api/lib/blog.js";
-import { json } from "@/lib/api-response";
+import { listarDestaques } from "../../../../backend/lib/blog.js";
+import { json, metodoNaoPermitido } from "@/lib/api-response";
 
 export const Route = createFileRoute("/api/public/postagens/destaques")({
   server: {
     handlers: {
       GET: () => json(listarDestaques()),
+      ANY: metodoNaoPermitido,
     },
   },
 });

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { buscarPostagens } from "../../../../api/lib/blog.js";
-import { json } from "@/lib/api-response";
+import { buscarPostagens } from "../../../../backend/lib/blog.js";
+import { json, metodoNaoPermitido } from "@/lib/api-response";
 
 export const Route = createFileRoute("/api/public/buscar")({
   server: {
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/api/public/buscar")({
         const q = new URL(request.url).searchParams.get("q");
         return json(buscarPostagens(q));
       },
+      ANY: metodoNaoPermitido,
     },
   },
 });

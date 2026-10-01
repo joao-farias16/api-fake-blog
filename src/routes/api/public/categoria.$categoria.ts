@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { listarPorCategoria } from "../../../../api/lib/blog.js";
-import { json } from "@/lib/api-response";
+import { listarPorCategoria } from "../../../../backend/lib/blog.js";
+import { json, metodoNaoPermitido } from "@/lib/api-response";
 
 export const Route = createFileRoute("/api/public/categoria/$categoria")({
   server: {
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/api/public/categoria/$categoria")({
         }
         return json(postagens);
       },
+      ANY: metodoNaoPermitido,
     },
   },
 });

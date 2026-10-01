@@ -1,9 +1,11 @@
 /**
  * Configuração central da URL base da API.
- * Em desenvolvimento/produção basta definir VITE_API_BASE_URL
- * (ex.: http://localhost:8080) para apontar para a API Express.
+ * Por padrão usa "/api/public" (mesma origem): os endpoints são servidos pela
+ * própria aplicação, tanto em `npm run dev` quanto no deploy da Vercel.
+ * Para apontar para a API Express separada, defina VITE_API_BASE_URL
+ * (ex.: http://localhost:8080) antes de rodar/compilar o frontend.
  */
-export const API_BASE_URL = "https://api-fake-blog-jet.vercel.app/api/public";
+export const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"] || "/api/public";
 
 export interface Postagem {
   index: number;
@@ -63,7 +65,8 @@ export const api = {
   destaques: () => request<Postagem[]>("/postagens/destaques"),
   postagem: (index: string | number) => request<Postagem>(`/postagem/${index}`),
   categorias: () => request<Categoria[]>("/categorias"),
-  porCategoria: (categoria: string) => request<Postagem[]>(`/categoria/${encodeURIComponent(categoria)}`),
+  porCategoria: (categoria: string) =>
+    request<Postagem[]>(`/categoria/${encodeURIComponent(categoria)}`),
   buscar: (q: string) => request<Postagem[]>(`/buscar?q=${encodeURIComponent(q)}`),
   autores: () => request<Autor[]>("/autores"),
   porAutor: (nome: string) => request<Postagem[]>(`/autor/${encodeURIComponent(nome)}`),

@@ -1,9 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, CalendarDays, Tag } from "lucide-react";
+import { useEffect } from "react";
 
 import { api } from "@/lib/api";
+import { registrarVisualizacao } from "@/lib/local-storage";
 import { SiteHeader } from "@/components/blog/site-header";
+import { FavoriteButton } from "@/components/blog/favorite-button";
 import { EmptyState, ErrorState, InlineLoading } from "@/components/blog/states";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,6 +41,12 @@ function PostagemPage() {
     retry: false,
   });
 
+  // Só entra no histórico a postagem que realmente foi carregada.
+  const indexCarregado = postagem.data?.index;
+  useEffect(() => {
+    if (indexCarregado !== undefined) registrarVisualizacao(indexCarregado);
+  }, [indexCarregado]);
+
   return (
     <div className="min-h-screen">
       <SiteHeader onSearch={(q) => navigate({ to: "/", search: { q } })} />
@@ -59,9 +68,12 @@ function PostagemPage() {
           />
         ) : (
           <article>
-            <Badge variant="secondary" className="uppercase">
-              {postagem.data.categoria}
-            </Badge>
+            <div className="flex items-center justify-between gap-4">
+              <Badge variant="secondary" className="uppercase">
+                {postagem.data.categoria}
+              </Badge>
+              <FavoriteButton index={postagem.data.index} />
+            </div>
 
             <h1 className="mt-4 text-2xl leading-tight font-bold sm:text-4xl">
               {postagem.data.title}

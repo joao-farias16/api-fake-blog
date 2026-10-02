@@ -10,6 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EstatisticasRouteImport } from './routes/estatisticas'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as HistoricoRouteImport } from './routes/historico'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as AutorNomeRouteImport } from './routes/autor.$nome'
 import { Route as PostagemIndexRouteImport } from './routes/postagem.$index'
 import { Route as ApiPublicSplatRouteImport } from './routes/api/public/$'
@@ -25,6 +29,26 @@ import { Route as ApiPublicPostagensDestaquesRouteImport } from './routes/api/pu
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstatisticasRoute = EstatisticasRouteImport.update({
+  id: '/estatisticas',
+  path: '/estatisticas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoricoRoute = HistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutorNomeRoute = AutorNomeRouteImport.update({
@@ -87,6 +111,10 @@ const ApiPublicPostagensDestaquesRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/favoritos': typeof FavoritosRoute
+  '/historico': typeof HistoricoRoute
+  '/sobre': typeof SobreRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
   '/api/public/$': typeof ApiPublicSplatRoute
@@ -101,6 +129,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/favoritos': typeof FavoritosRoute
+  '/historico': typeof HistoricoRoute
+  '/sobre': typeof SobreRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
   '/api/public/$': typeof ApiPublicSplatRoute
@@ -116,6 +148,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/favoritos': typeof FavoritosRoute
+  '/historico': typeof HistoricoRoute
+  '/sobre': typeof SobreRoute
   '/autor/$nome': typeof AutorNomeRoute
   '/postagem/$index': typeof PostagemIndexRoute
   '/api/public/$': typeof ApiPublicSplatRoute
@@ -132,6 +168,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/estatisticas'
+    | '/favoritos'
+    | '/historico'
+    | '/sobre'
     | '/autor/$nome'
     | '/postagem/$index'
     | '/api/public/$'
@@ -146,6 +186,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/estatisticas'
+    | '/favoritos'
+    | '/historico'
+    | '/sobre'
     | '/autor/$nome'
     | '/postagem/$index'
     | '/api/public/$'
@@ -160,6 +204,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/estatisticas'
+    | '/favoritos'
+    | '/historico'
+    | '/sobre'
     | '/autor/$nome'
     | '/postagem/$index'
     | '/api/public/$'
@@ -175,6 +223,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EstatisticasRoute: typeof EstatisticasRoute
+  FavoritosRoute: typeof FavoritosRoute
+  HistoricoRoute: typeof HistoricoRoute
+  SobreRoute: typeof SobreRoute
   AutorNomeRoute: typeof AutorNomeRoute
   PostagemIndexRoute: typeof PostagemIndexRoute
   ApiPublicSplatRoute: typeof ApiPublicSplatRoute
@@ -194,6 +246,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estatisticas': {
+      id: '/estatisticas'
+      path: '/estatisticas'
+      fullPath: '/estatisticas'
+      preLoaderRoute: typeof EstatisticasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historico': {
+      id: '/historico'
+      path: '/historico'
+      fullPath: '/historico'
+      preLoaderRoute: typeof HistoricoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/autor/$nome': {
@@ -289,6 +369,10 @@ const ApiPublicPostagensRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EstatisticasRoute: EstatisticasRoute,
+  FavoritosRoute: FavoritosRoute,
+  HistoricoRoute: HistoricoRoute,
+  SobreRoute: SobreRoute,
   AutorNomeRoute: AutorNomeRoute,
   PostagemIndexRoute: PostagemIndexRoute,
   ApiPublicSplatRoute: ApiPublicSplatRoute,

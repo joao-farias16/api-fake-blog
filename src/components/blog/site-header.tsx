@@ -1,9 +1,83 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Terminal } from "lucide-react";
+import {
+  ChartColumn,
+  Heart,
+  History,
+  Info,
+  Menu,
+  Newspaper,
+  Search,
+  Terminal,
+  Users,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+/** Páginas da V2: inline no desktop (lg+) e no menu lateral em telas menores. */
+const paginasExtras = [
+  { to: "/favoritos", label: "Favoritos", icon: Heart },
+  { to: "/historico", label: "Histórico", icon: History },
+  { to: "/estatisticas", label: "Estatísticas", icon: ChartColumn },
+  { to: "/sobre", label: "Sobre", icon: Info },
+] as const;
+
+const linkAtivo = { className: "text-primary" };
+
+function MenuNavegacao({ className }: { className?: string }) {
+  const [aberto, setAberto] = useState(false);
+  const fechar = () => setAberto(false);
+
+  return (
+    <Sheet open={aberto} onOpenChange={setAberto}>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="sm" className={className} aria-label="Abrir menu">
+          <Menu aria-hidden />
+          <span className="hidden sm:inline">Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right" className="w-72">
+        <SheetHeader>
+          <SheetTitle className="font-display">
+            Fake<span className="text-primary">Blog</span>
+          </SheetTitle>
+          <SheetDescription>Navegue pelas páginas do blog.</SheetDescription>
+        </SheetHeader>
+        <nav className="mt-6 flex flex-col gap-1 text-sm">
+          <Button variant="ghost" className="justify-start" asChild>
+            <Link to="/" onClick={fechar}>
+              <Newspaper aria-hidden />
+              Postagens
+            </Link>
+          </Button>
+          <Button variant="ghost" className="justify-start" asChild>
+            <Link to="/" hash="autores" onClick={fechar}>
+              <Users aria-hidden />
+              Autores
+            </Link>
+          </Button>
+          {paginasExtras.map(({ to, label, icon: Icon }) => (
+            <Button key={to} variant="ghost" className="justify-start" asChild>
+              <Link to={to} onClick={fechar} activeProps={linkAtivo}>
+                <Icon aria-hidden />
+                {label}
+              </Link>
+            </Button>
+          ))}
+        </nav>
+      </SheetContent>
+    </Sheet>
+  );
+}
 
 export function SiteHeader({
   initialQuery = "",
@@ -33,6 +107,7 @@ export function SiteHeader({
             <Button variant="ghost" size="sm" asChild>
               <Link to="/">Postagens</Link>
             </Button>
+            <MenuNavegacao />
           </nav>
         </div>
 
@@ -46,6 +121,14 @@ export function SiteHeader({
                 Autores
               </Link>
             </Button>
+            {paginasExtras.map(({ to, label }) => (
+              <Button key={to} variant="ghost" size="sm" className="hidden lg:inline-flex" asChild>
+                <Link to={to} activeProps={linkAtivo}>
+                  {label}
+                </Link>
+              </Button>
+            ))}
+            <MenuNavegacao className="lg:hidden" />
           </nav>
 
           <form

@@ -1,5 +1,8 @@
-import { Loader2, SearchX, TriangleAlert } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowLeft, Loader2, SearchX, TriangleAlert, type LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function LoadingGrid({ items = 6 }: { items?: number }) {
@@ -42,12 +45,35 @@ export function ErrorState({ message }: { message: string }) {
   );
 }
 
-export function EmptyState({ title, description }: { title: string; description?: string }) {
+export function EmptyState({
+  title,
+  description,
+  icon: Icon = SearchX,
+  action,
+}: {
+  title: string;
+  description?: string;
+  icon?: LucideIcon;
+  action?: ReactNode;
+}) {
   return (
     <div className="rounded-xl border border-border bg-card p-10 text-center">
-      <SearchX className="mx-auto size-6 text-muted-foreground" aria-hidden />
+      <Icon className="mx-auto size-6 text-muted-foreground" aria-hidden />
       <h3 className="mt-3 text-base font-semibold text-card-foreground">{title}</h3>
       {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+      {action ? <div className="mt-5 flex justify-center">{action}</div> : null}
     </div>
+  );
+}
+
+/** Ação padrão dos estados vazios: voltar para a lista de postagens. */
+export function VoltarParaPostagens() {
+  return (
+    <Button asChild>
+      <Link to="/">
+        <ArrowLeft aria-hidden />
+        Ver postagens
+      </Link>
+    </Button>
   );
 }
